@@ -1,0 +1,51 @@
+{
+	"name": "sveltekit-grammar-check",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"lint:css": "stylelint \"src/**/*.{css,svelte}\"",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@commitlint/config-conventional": "^17.4.4",
+		"@iconify/svelte": "^3.1.0",
+		"@sveltejs/adapter-netlify": "^2.0.6",
+		"@sveltejs/kit": "^1.14.0",
+		"@typescript-eslint/eslint-plugin": "^5.56.0",
+		"@typescript-eslint/parser": "^5.56.0",
+		"commitlint": "^17.5.0",
+		"eslint": "^8.36.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"husky": "^8.0.3",
+		"postcss": "^8.4.21",
+		"postcss-csso": "^6.0.1",
+		"postcss-custom-media": "^9.1.2",
+		"postcss-html": "^1.5.0",
+		"postcss-preset-env": "^8.1.0",
+		"prettier": "^2.8.7",
+		"prettier-plugin-svelte": "^2.10.0",
+		"stylelint": "^15.3.0",
+		"stylelint-config-recommended": "^11.0.0",
+		"stylelint-config-standard": "^31.0.0",
+		"svelte": "^3.57.0",
+		"svelte-check": "^3.1.4",
+		"tslib": "^2.5.0",
+		"typescript": "^5.0.2",
+		"vite": "^4.2.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rodneylab/sveltekit-grammar-check"
+	},
+	"bugs": {
+		"url": "https://github.com/rodneylab/sveltekit-grammar-check/issues"
+	},
+	"type": "module"
+}
