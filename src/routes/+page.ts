@@ -1,7 +1,7 @@
 import { chunkText, grammarCheckChunk, mergeChunkResults } from '$lib/utilities/grammar';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async function load({ data, fetch }) {
+export const load: PageLoad = async function load({ data }) {
 	// check grammar
 	try {
 		const { text } = data;

@@ -4,13 +4,19 @@
 	import '$lib/styles/fonts.css';
 	import '$lib/styles/global.css';
 	import { chunkText, grammarCheckChunk, mergeChunkResults } from '$lib/utilities/grammar';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
+
 	export let data: PageData;
+	export let form: ActionData;
 
 	let {
 		text,
 		results: { matches }
 	} = data;
+	let { missing, saved = false, text: submittedText } = form ?? {};
+	if (typeof submittedText !== 'undefined') {
+		text = submittedText;
+	}
 
 	async function handleRecheck() {
 		try {
@@ -33,6 +39,14 @@
 	$: matchCount = [...matches].length;
 </script>
 
+<svelte:head>
+	<title>SvelteKit Spelling, Punctuation & Grammar Checker with LanguageTool</title>
+	<meta
+		title="description"
+		content="SvelteKit forms ❤️ use SvelteKit endpoint APIs to build a spelling, punctuation & grammar check app, with client and server form handling 📝"
+	/>
+</svelte:head>
+
 <main>
 	<h1>SvelteKit Spelling, Punctuation & Grammar Checker with LanguageTool</h1>
 	<form on:submit={handleRecheck}>
@@ -40,13 +54,31 @@
 			<h2>Checked Text</h2>
 			<button type="submit">Re-check<UpdateIcon /></button>
 		</div>
-		<textarea bind:value={text} name="text" placeholder="Enter text" rows={3} />
+		<textarea
+			bind:value={text}
+			on:blur={() => {
+				saved = false;
+			}}
+			name="text"
+			placeholder="Enter text"
+			rows={3}
+			aria-invalid={missing === 'text'}
+			aria-describedby={missing !== 'text' ? undefined : 'text-error'}
+		/>
+		{#if missing === 'text'}
+			<small id={`text-error`} class="error-text">Enter some text before hitting save</small>
+		{/if}
 	</form>
 	<form class="save-form" action="?/save" method="post">
 		<span class="status" class:matches={matchCount > 0}> {matches.length} checker results</span>
 		<input type="hidden" name="text" value={text} />
 		<button type="submit">Save changes<SaveIcon /></button>
 	</form>
+	{#if saved}
+		<div class="saved">Saved</div>
+	{:else if missing}
+		{JSON.stringify(missing, null, 2)}
+	{/if}
 
 	{#if matchCount > 0}
 		<details>
@@ -92,6 +124,13 @@
 		display: flex;
 		flex-direction: row;
 		align-items: baseline;
+	}
+
+	small {
+		padding-block: var(--spacing-2);
+	}
+	.saved {
+		margin-bottom: var(--spacing-4);
 	}
 
 	.matches {
