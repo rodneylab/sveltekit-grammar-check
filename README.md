@@ -13,7 +13,7 @@
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/rodneylab/sveltekit-grammar-check)
 
-Demo code for running proofreading checks with LanguageTool in SvelteKit. The code accompanies the <a href="https://rodneylab.com/sveltekit-grammar-check/">post on using forms with SvelteKit</a>. If you have any questions, please drop a comment at the bottom of that page.
+Demo code for running proofreading checks with LanguageTool in SvelteKit. The code accompanies the <a href="https://rodneylab.com/sveltekit-forms/">post on using forms with SvelteKit</a>. If you have any questions, please drop a comment at the bottom of that page.
 
 ## Building and previewing the site
 
