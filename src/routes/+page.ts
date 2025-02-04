@@ -11,14 +11,14 @@ export const load: PageLoad = async function load({ data }) {
 			chunks.map(async ({ text, offsetAdjust }) => {
 				const { matches } = await grammarCheckChunk({ text, offsetAdjust });
 				return { matches };
-			})
+			}),
 		);
 
 		const results = mergeChunkResults(chunkResults);
 
 		return {
 			results,
-			text
+			text,
 		};
 	} catch (error: unknown) {
 		console.error(`Error in page load: ${error as string}`);

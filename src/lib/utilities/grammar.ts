@@ -15,7 +15,7 @@ export function chunkText(text: string): TextChunk[] {
 		if (end < textLength) {
 			const lastFullStopIndex = Math.max(
 				text.slice(start, end).lastIndexOf('. '),
-				text.slice(start, end).lastIndexOf('\n\n')
+				text.slice(start, end).lastIndexOf('\n\n'),
 			);
 			if (lastFullStopIndex >= 0) {
 				end = Math.max(end - start - LOOKBACK_CHARACTERS, lastFullStopIndex) + 1 + start;
@@ -35,15 +35,15 @@ export async function grammarCheckChunk({ text, offsetAdjust }: TextChunk): Prom
 		const body = new URLSearchParams({
 			text,
 			language: 'en-GB',
-			level: 'picky'
+			level: 'picky',
 		});
 		const response = await fetch('https://api.languagetoolplus.com/v2/check', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				Accept: 'application/json'
+				Accept: 'application/json',
 			},
-			body
+			body,
 		});
 
 		return processChunkResponse({ offsetAdjust, response });
@@ -55,20 +55,20 @@ export async function grammarCheckChunk({ text, offsetAdjust }: TextChunk): Prom
 
 export function mergeChunkResults(results: Results[]): Results {
 	const result: Results = {
-		matches: []
+		matches: [],
 	};
 
 	return results.reduce(({ matches }, current) => {
 		const { matches: currentMatches } = current;
 		return {
-			matches: [...matches, ...currentMatches]
+			matches: [...matches, ...currentMatches],
 		};
 	}, result);
 }
 
 export async function processChunkResponse({
 	response,
-	offsetAdjust
+	offsetAdjust,
 }: {
 	response: Response;
 	offsetAdjust: number;
@@ -82,7 +82,7 @@ export async function processChunkResponse({
 		matches: matches.map(({ context, message, offset }) => ({
 			context,
 			message,
-			offset: offset + offsetAdjust
-		}))
+			offset: offset + offsetAdjust,
+		})),
 	};
 }

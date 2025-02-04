@@ -1,5 +1,5 @@
-import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { fail } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	save: async ({ request }) => {
@@ -13,9 +13,10 @@ export const actions: Actions = {
 			}
 			return fail(400, { missing: 'text', text: '' });
 		} catch (error: unknown) {
+			console.error(`Error in for action: ${error as string}`);
 			return fail(400, { missing: 'text', text: '' });
 		}
-	}
+	},
 };
 
 export const load: PageServerLoad = function load() {
