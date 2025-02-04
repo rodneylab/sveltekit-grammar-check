@@ -6,14 +6,17 @@
 	import { chunkText, grammarCheckChunk, mergeChunkResults } from '$lib/utilities/grammar';
 	import type { ActionData, PageData } from './$types';
 
-	export let data: PageData;
-	export let form: ActionData;
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	let {
 		text,
-		results: { matches }
-	} = data;
-	let { missing, saved = false, text: submittedText } = form ?? {};
+		results: { matches },
+	} = $state(data);
+	let {
+		missing,
+		saved = false,
+		text: submittedText,
+	} = $state(form ?? { missing: '', saved: false, text: '' });
 	if (typeof submittedText !== 'undefined') {
 		text = submittedText;
 	}
@@ -25,7 +28,7 @@
 				chunks.map(async ({ text, offsetAdjust }) => {
 					const { matches } = await grammarCheckChunk({ text, offsetAdjust });
 					return { matches };
-				})
+				}),
 			);
 
 			const { matches: updatedMatches } = mergeChunkResults(chunkResults);
@@ -36,7 +39,7 @@
 		}
 	}
 
-	$: matchCount = [...matches].length;
+	let matchCount = $derived(matches.length);
 </script>
 
 <svelte:head>
@@ -49,14 +52,14 @@
 
 <main>
 	<h1>SvelteKit Spelling, Punctuation & Grammar Checker with LanguageTool</h1>
-	<form on:submit={handleRecheck}>
+	<form onsubmit={handleRecheck}>
 		<div class="check-form-header">
 			<h2>Checked Text</h2>
 			<button type="submit">Re-check<UpdateIcon /></button>
 		</div>
 		<textarea
 			bind:value={text}
-			on:blur={() => {
+			onblur={() => {
 				saved = false;
 			}}
 			name="text"
@@ -64,7 +67,7 @@
 			rows={3}
 			aria-invalid={missing === 'text'}
 			aria-describedby={missing !== 'text' ? undefined : 'text-error'}
-		/>
+		></textarea>
 		{#if missing === 'text'}
 			<small id={`text-error`} class="error-text">Enter some text before hitting save</small>
 		{/if}

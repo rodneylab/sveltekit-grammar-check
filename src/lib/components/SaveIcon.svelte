@@ -1,25 +1,31 @@
 <script>
-	import Icon, { addCollection } from '@iconify/svelte';
-
-	export let label = 'Save icon';
-	export let colour = 'inherit';
-	export let ariaHidden = false;
-	export let width = 24;
-
-	addCollection({
-		prefix: 'lucide',
-		lastModified: 1679466509,
-		aliases: {},
-		width: 24,
-		height: 24,
-		icons: {
-			save: {
-				body: '<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></g>'
-			}
-		}
-	});
-
-	// https://api.iconify.design/lucide.json?icons=save
+	let {
+		label = 'save',
+		colour = 'inherit',
+		ariaHidden = false,
+		width = 24,
+		height = width,
+	} = $props();
 </script>
 
-<Icon role="img" icon="lucide:save" {ariaHidden} aria-label={label} color={colour} {width} />
+<div class="logo">
+	<svg
+		aria-hidden={ariaHidden}
+		color={colour}
+		aria-label={label}
+		role="img"
+		{width}
+		{height}
+		viewBox="0 0 24 24"
+		fill="none"
+	>
+		<use href="/sprite.svg#save" />
+	</svg>
+</div>
+
+<style>
+	.logo {
+		display: flex;
+		align-items: center;
+	}
+</style>
